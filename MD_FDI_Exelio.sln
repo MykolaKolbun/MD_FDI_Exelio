@@ -5,6 +5,10 @@ VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MD_FDI_Exelio", "MD_FDI_Exelio\MD_FDI_Exelio.csproj", "{DF574749-ADFF-4468-ADEB-337681FC65BE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleTests", "ConsoleTests\ConsoleTests.csproj", "{CE1E9138-6D3D-498E-ACF3-77E0BF6A8DA2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestForm", "TestForm\TestForm.csproj", "{473534A1-6A11-4A52-A26E-B5A01A62E2B6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{DF574749-ADFF-4468-ADEB-337681FC65BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DF574749-ADFF-4468-ADEB-337681FC65BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DF574749-ADFF-4468-ADEB-337681FC65BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE1E9138-6D3D-498E-ACF3-77E0BF6A8DA2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE1E9138-6D3D-498E-ACF3-77E0BF6A8DA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE1E9138-6D3D-498E-ACF3-77E0BF6A8DA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE1E9138-6D3D-498E-ACF3-77E0BF6A8DA2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{473534A1-6A11-4A52-A26E-B5A01A62E2B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{473534A1-6A11-4A52-A26E-B5A01A62E2B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{473534A1-6A11-4A52-A26E-B5A01A62E2B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{473534A1-6A11-4A52-A26E-B5A01A62E2B6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -8,7 +8,7 @@ using SkiData.FiscalDevices;
 
 namespace MD_FDI_Exelio
 {
-    public class Exelio_APM : IFiscalDevice2, ICash
+    public class FiscalDevice_APM: IFiscalDevice2, ICash
     {
         public string DeviceId => throw new NotImplementedException();
 
