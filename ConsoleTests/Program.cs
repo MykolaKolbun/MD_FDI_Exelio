@@ -10,17 +10,15 @@ namespace ConsoleTests
     {
         static void Main(string[] args)
         {
-            byte[] data = { 0x01, 0x20, 0x21, 0x5A, 0x6B, 0x0C, 0x05 };
-            List<byte> ls = Bcc(data);
-            byte seq = 0x20;
-            List<byte> outMessage = new List<byte>();
-                int i = 0;
-                var outData = new byte[data.Length + 7];
-                outData[++i] = 0x01;                          // Start byte
-                outData[++i] = (byte)(data.Length + 4);       // Len byte
-                outData[++i] = seq;                           // Seq byte
 
-                outMessage.Add((byte)(data.Length + 4));
+            ///
+            ///     01 25 21 5a 30 05 30 30 3d 35 03                  .%!Z0.00=5.      
+
+            byte[] data = { 0x5a, 0x30 };
+            List<byte> ls = Bcc(data);
+            byte seq = 0x21;
+            List<byte> outMessage = new List<byte>();
+                outMessage.Add((byte)(data.Length + 3 + 32));
                 outMessage.Add(seq);
                 outMessage.AddRange(data);
                 outMessage.Add(0x05);
@@ -45,13 +43,13 @@ namespace ConsoleTests
                 sum += d;
             }
 
-            bcc.Add((byte)(sum / 4096));
+            bcc.Add((byte)(sum / 4096 + 48));
             sum %= 4096;
-            bcc.Add((byte)(sum / 256));
+            bcc.Add((byte)(sum / 256 + 48));
             sum %= 256;
-            bcc.Add((byte)(sum / 16));
+            bcc.Add((byte)(sum / 16 + 48));
             sum %= 16;
-            bcc.Add((byte)sum);
+            bcc.Add((byte)(sum + 48));
             return bcc;
         }
     }

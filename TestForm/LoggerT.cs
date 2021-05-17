@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MD_FDI_Exelio
+namespace TestForm
 {
-    class Logger
+    class LoggerT
     {
         /// <summary>
         /// Полный путь к лог файлу.
@@ -16,7 +16,7 @@ namespace MD_FDI_Exelio
         /// <summary>
         /// Конструктор класса Logger. Создает папку и файл.
         /// </summary>
-        public Logger(string machineID)
+        public LoggerT(string machineID)
         {
             this.FilePath = $@"C:\Log\{machineID}_FiscalTrace-{DateTime.Now:yyyy-MM-dd}.txt";
         }

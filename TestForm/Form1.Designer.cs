@@ -38,6 +38,7 @@ namespace TestForm
             this.btnZRep = new System.Windows.Forms.Button();
             this.btnSetTime = new System.Windows.Forms.Button();
             this.btnGetTime = new System.Windows.Forms.Button();
+            this.btnRunPaper = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnConnect
@@ -48,6 +49,7 @@ namespace TestForm
             this.btnConnect.TabIndex = 0;
             this.btnConnect.Text = "Connect";
             this.btnConnect.UseVisualStyleBackColor = true;
+            this.btnConnect.Click += new System.EventHandler(this.btnConnect_Click);
             // 
             // btnClose
             // 
@@ -122,11 +124,22 @@ namespace TestForm
             this.btnGetTime.Text = "Get Time";
             this.btnGetTime.UseVisualStyleBackColor = true;
             // 
+            // btnRunPaper
+            // 
+            this.btnRunPaper.Location = new System.Drawing.Point(13, 246);
+            this.btnRunPaper.Name = "btnRunPaper";
+            this.btnRunPaper.Size = new System.Drawing.Size(96, 23);
+            this.btnRunPaper.TabIndex = 9;
+            this.btnRunPaper.Text = "Run Paper";
+            this.btnRunPaper.UseVisualStyleBackColor = true;
+            this.btnRunPaper.Click += new System.EventHandler(this.btnRunPaper_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(123, 450);
+            this.ClientSize = new System.Drawing.Size(213, 450);
+            this.Controls.Add(this.btnRunPaper);
             this.Controls.Add(this.btnGetTime);
             this.Controls.Add(this.btnSetTime);
             this.Controls.Add(this.btnZRep);
@@ -153,6 +166,7 @@ namespace TestForm
         private System.Windows.Forms.Button btnZRep;
         private System.Windows.Forms.Button btnSetTime;
         private System.Windows.Forms.Button btnGetTime;
+        private System.Windows.Forms.Button btnRunPaper;
     }
 }
 

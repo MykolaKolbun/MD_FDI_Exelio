@@ -5,14 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MD_FDI_Exelio
+namespace TestForm
 {
-    class ComPort
+    class ComPortT
     {
         SerialPort Port = new SerialPort();
         public delegate void Received(byte[] data, UInt16 len);
         public event Received ReceivedEvent;
-        byte seq = 0x20;
+        byte seq = 0x21;
         private void OnRecievedEvent(byte[] data, UInt16 len)
         {
             if (this.ReceivedEvent != null)
@@ -29,7 +29,7 @@ namespace MD_FDI_Exelio
             //Насторойка порта
             Port.DataReceived += new SerialDataReceivedEventHandler(DataReceivedHandler);
             Port.PortName = _portname;
-            Port.BaudRate = 38400;
+            Port.BaudRate = 57600;
             Port.Parity = Parity.None;
             Port.DataBits = 8;
             Port.StopBits = StopBits.One;
@@ -54,22 +54,17 @@ namespace MD_FDI_Exelio
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
-        public int SendData(byte [] data)
+        public int SendData(byte[] data)
         {
             List<byte> outMessage = new List<byte>();
-            int i = 0;
-            var outData = new byte[data.Length + 7];
-            outData[++i] = 0x01;                          // Start byte
-            outData[++i] = (byte)(data.Length + 4);       // Len byte
-            outData[++i] = seq;                           // Seq byte
-
-            outMessage.Add((byte)(data.Length + 4));
+            outMessage.Add((byte)(data.Length + 3 +32 ));
             outMessage.Add(seq);
             outMessage.AddRange(data);
             outMessage.Add(0x05);
             outMessage.AddRange(Bcc(outMessage.ToArray()));
             outMessage.Add(0x03);
             outMessage.Insert(0, 0x01);
+            seq++;
             return Send(outMessage.ToArray());
         }
 
