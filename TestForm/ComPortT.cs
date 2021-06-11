@@ -4,6 +4,7 @@ using System.IO.Ports;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+//using System.Timers;
 
 namespace TestForm
 {
@@ -12,8 +13,15 @@ namespace TestForm
         SerialPort Port = new SerialPort();
         public delegate void Received(byte[] data, UInt16 len);
         public event Received ReceivedEvent;
-        byte seq = 0x21;
-        private void OnRecievedEvent(byte[] data, UInt16 len)
+        byte seq = 0x31;
+
+        static int proc = 2;
+        static bool sent = false;
+        static bool timeout = false;
+        //byte[] buffer;
+
+        //Timer timeoutTimer;
+        public void OnRecievedEvent(byte[] data, UInt16 len)
         {
             if (this.ReceivedEvent != null)
                 this.ReceivedEvent(data, len);
@@ -27,7 +35,7 @@ namespace TestForm
         public int Connect(string _portname)
         {
             //Насторойка порта
-            Port.DataReceived += new SerialDataReceivedEventHandler(DataReceivedHandler);
+            
             Port.PortName = _portname;
             Port.BaudRate = 57600;
             Port.Parity = Parity.None;
@@ -37,10 +45,14 @@ namespace TestForm
             Port.RtsEnable = true;
             Port.DtrEnable = true;
             Port.Encoding = Encoding.Unicode;
+            Port.DataReceived += new SerialDataReceivedEventHandler(DataReceivedHandler);
             try
             {
                 if (!(Port.IsOpen))
+                {
                     Port.Open();
+                    //Port.ReadExisting();
+                }
                 return 0;
             }
             catch (Exception)
@@ -67,7 +79,6 @@ namespace TestForm
             seq++;
             return Send(outMessage.ToArray());
         }
-
         /// <summary>
         /// Обработчик события прихода данных в COM-порт
         /// </summary>
@@ -79,20 +90,20 @@ namespace TestForm
             SerialPort port = (SerialPort)sender;
             port.ReadTimeout = 5000;
             var buffer = new byte[256];
-            byte preambula;
-            byte len = 0;
-            int i = 0;
-            preambula = (byte)port.ReadByte();
-            if (preambula == 0x01)
+            byte received;
+            byte len;
+            received = (byte)port.ReadByte();
+            if (received == 0x01)
             {
                 len = (byte)port.ReadByte();
+                for (int i = 0; i < (len-28); i++)
+                {
+                    buffer[i] = (byte)port.ReadByte();
+                }
+                this.OnRecievedEvent(buffer, (UInt16)(len));
             }
-            do
-            {
-                buffer[i] = (byte)port.ReadByte();
-            }
-            while (buffer[++i] != 0x03);
-            this.OnRecievedEvent(buffer, (UInt16)(len - 0x20));
+            else
+                port.ReadExisting();
         }
 
         /// <summary>
@@ -120,7 +131,9 @@ namespace TestForm
         {
             try
             {
+                Port.DataReceived -= new SerialDataReceivedEventHandler(DataReceivedHandler);
                 Port.Close();
+                Port.Dispose();
                 return 0;
             }
             catch (Exception)

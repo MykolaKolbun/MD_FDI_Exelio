@@ -29,7 +29,7 @@ namespace MD_FDI_Exelio
             //Насторойка порта
             Port.DataReceived += new SerialDataReceivedEventHandler(DataReceivedHandler);
             Port.PortName = _portname;
-            Port.BaudRate = 38400;
+            Port.BaudRate = 57600;
             Port.Parity = Parity.None;
             Port.DataBits = 8;
             Port.StopBits = StopBits.One;
@@ -70,7 +70,8 @@ namespace MD_FDI_Exelio
             outMessage.AddRange(Bcc(outMessage.ToArray()));
             outMessage.Add(0x03);
             outMessage.Insert(0, 0x01);
-            return Send(outMessage.ToArray());
+            Send(outMessage.ToArray());
+            return 0;
         }
 
         /// <summary>
@@ -82,7 +83,7 @@ namespace MD_FDI_Exelio
         public void DataReceivedHandler(object sender, SerialDataReceivedEventArgs e)
         {
             SerialPort port = (SerialPort)sender;
-            port.ReadTimeout = 5000;
+            port.ReadTimeout = 500;
             var buffer = new byte[256];
             byte preambula;
             byte len = 0;
@@ -91,13 +92,18 @@ namespace MD_FDI_Exelio
             if (preambula == 0x01)
             {
                 len = (byte)port.ReadByte();
+
+                do
+                {
+                    buffer[i] = (byte)port.ReadByte();
+                }
+                while (buffer[++i] != 0x03);
+                this.OnRecievedEvent(buffer, (UInt16)(len - 0x20));
             }
-            do
+            else if(preambula == 0x16)
             {
-                buffer[i] = (byte)port.ReadByte();
+
             }
-            while (buffer[++i] != 0x03);
-            this.OnRecievedEvent(buffer, (UInt16)(len - 0x20));
         }
 
         /// <summary>
