@@ -26,17 +26,13 @@ namespace TestForm
 
         private void btnRunPaper_Click(object sender, EventArgs e)
         {
-            printer.OpenDoc();
-            SetCboxes();
-            printer.PrintText("qwertyuiiopasdfghjk");
-            SetCboxes();
-            printer.CloseDoc();
+            printer.PrinterStatus();
             SetCboxes();
         }
 
         private void btnGetTime_Click(object sender, EventArgs e)
         {
-            log.Write($"Btn result: {printer.GetState()}");
+            log.Write($"Btn result: {printer.VoidReceipt()}");
             SetCboxes();
         }
 
@@ -102,6 +98,13 @@ namespace TestForm
             cb21.Checked = printer.lowPaper;
             cb23.Checked = printer.fiscalOpened;
             cb25.Checked = printer.fiscalNotOpened;
+        }
+
+        private void btnSetTime_Click(object sender, EventArgs e)
+        {
+            SetCboxes();
+            printer.SetDateTime();
+            SetCboxes();
         }
     }
 }

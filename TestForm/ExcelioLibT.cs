@@ -32,11 +32,6 @@ namespace TestForm
         public bool low4000ECL = false;          //ECL близький до своєї максимальної ємності, залишилося менше 4000 Г байт. Цей прапор призначений лише для інформації і не впливає на жодну команду.
 
 
-
-
-        /// </summary>
-        byte[] dataReceived;
-
         public uint daySum = 0;
 
         public delegate void StatusChanged(int status);
@@ -159,9 +154,7 @@ namespace TestForm
             };
             return printer.SendData(outMessage.ToArray());
         }
-
         #endregion
-
 
         #region Reports
         public int ZReport()
@@ -174,7 +167,6 @@ namespace TestForm
             };
             return printer.SendData(outMessage.ToArray());
         }
-
         public int PrintZReport()
         {
             byte cmd = 0x78;
@@ -199,10 +191,7 @@ namespace TestForm
             outMessage.Add(0x31);
             return printer.SendData(outMessage.ToArray());
         }
-
-
         #endregion
-
 
         #region Cash In/Out
         /// <summary>
@@ -289,26 +278,28 @@ namespace TestForm
         /// <returns></returns>
         public int SetDateTime()
         {
-            return 0;
-        }
-
-        public int GetState()
-        {
-            byte cmd = 0x5A;
+            byte cmd = 0x3D;
             List<byte> outMessage = new List<byte>
             {
                 cmd
             };
+            outMessage.AddRange(GetBytes(DateTime.Now.ToString("dd-MM-yy HH:mm:ss")));
             return printer.SendData(outMessage.ToArray());
         }
 
         /// <summary>
-        /// 6Dh (109) ПЕЧАТЬ КОПИИ ЧЕКОВ
+        /// 6Dh (109) ПЕЧАТЬ КОПИИ Последнего чека
         /// </summary>
         /// <returns></returns>
-        public int CopyReceipt()
+        public int CopyReceipt(int num)
         {
-            return 0;
+            byte cmd = 0x6D;
+            List<byte> outMessage = new List<byte>
+            {
+                cmd,
+                (byte)(0x30+num)
+            };
+            return printer.SendData(outMessage.ToArray());
         }
 
         /// <summary>
@@ -317,22 +308,22 @@ namespace TestForm
         /// <returns></returns>
         public int PrinterStatus()
         {
-            return 0;
+            byte cmd = 0x4A;
+            List<byte> outMessage = new List<byte>
+            {
+                cmd
+            };
+            return printer.SendData(outMessage.ToArray());
         }
         #endregion
 
         #region Private members
         private void Printer_ReceivedEvent(byte[] data, ushort dataLen)
         {
-            byte seq = 0;
-            byte cmd = 0;
             List<byte> cmdData = new List<byte>();
             byte delimiter = 0x04;
             List<byte> status = new List<byte>();
             byte postambula = 0x05;
-            List<byte> bcc = new List<byte>();
-            seq = data[0];
-            cmd = data[1];
             int i = 2;
             while (data[i] != delimiter)
             {
@@ -346,8 +337,8 @@ namespace TestForm
                 i++;
             }
 
-
             StatusHandler(status.ToArray());
+            ComPortT.sent = true;
         }
 
         private int StatusHandler(byte[] status)

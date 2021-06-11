@@ -157,6 +157,7 @@ namespace TestForm
             this.btnSetTime.TabIndex = 7;
             this.btnSetTime.Text = "Set Time";
             this.btnSetTime.UseVisualStyleBackColor = true;
+            this.btnSetTime.Click += new System.EventHandler(this.btnSetTime_Click);
             // 
             // btnGetTime
             // 

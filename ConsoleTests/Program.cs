@@ -39,7 +39,8 @@ namespace ConsoleTests
             //{
             //    Console.WriteLine(b);
             //}
-            ReceivedHandler(outMessage.ToArray(), 1);
+            //ReceivedHandler(outMessage.ToArray(), 1);
+            Console.WriteLine(DateTime.Now.ToString("dd-MM-yy HH:mm:ss"));
             Console.ReadKey();
 
         }

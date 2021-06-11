@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO.Ports;
 using System.Text;
-//using System.Timers;
+using System.Timers;
 
 namespace TestForm
 {
@@ -14,11 +14,10 @@ namespace TestForm
         byte seq = 0x31;
 
         static int proc = 2;
-        static bool sent = false;
+        public static bool sent = false;
         static bool timeout = false;
-        //byte[] buffer;
 
-        //Timer timeoutTimer;
+        Timer timeoutTimer;
         public void OnRecievedEvent(byte[] data, ushort len)
         {
             if (ReceivedEvent != null)
@@ -35,7 +34,11 @@ namespace TestForm
         public int Connect(string _portname)
         {
             //Насторойка порта
-
+            timeoutTimer = new Timer(5000)
+            {
+                AutoReset = false
+            };
+            timeoutTimer.Elapsed += TimeoutTimer_Elapsed;
             Port.PortName = _portname;
             Port.BaudRate = 57600;
             Port.Parity = Parity.None;
@@ -61,6 +64,11 @@ namespace TestForm
             }
         }
 
+        private void TimeoutTimer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            timeout = true;
+        }
+
         /// <summary>
         /// Prepare and send data to printer
         /// </summary>
@@ -68,6 +76,7 @@ namespace TestForm
         /// <returns></returns>
         public int SendData(byte[] data)
         {
+
             List<byte> outMessage = new List<byte>
             {
                 (byte)(data.Length + 3 + 32),
@@ -79,8 +88,20 @@ namespace TestForm
             outMessage.Add(0x03);
             outMessage.Insert(0, 0x01);
             seq++;
-            return Send(outMessage.ToArray());
+            int error = Send(outMessage.ToArray());
+            sent = false;
+            timeout = false;
+            timeoutTimer.Enabled = true;
+            while (!sent && !timeout)
+            { }
+            if (timeout)
+            {
+                error = 2;
+            }
+
+            return error;
         }
+
         /// <summary>
         /// Обработчик события прихода данных в COM-порт
         /// </summary>
@@ -90,7 +111,7 @@ namespace TestForm
         public void DataReceivedHandler(object sender, SerialDataReceivedEventArgs e)
         {
             SerialPort port = (SerialPort)sender;
-            port.ReadTimeout = 5000;
+            port.ReadTimeout = 6000;
             var buffer = new byte[256];
             byte received;
             byte len;
@@ -102,10 +123,16 @@ namespace TestForm
                 {
                     buffer[i] = (byte)port.ReadByte();
                 }
+                timeoutTimer.Enabled = false;
                 OnRecievedEvent(buffer, len);
             }
             else
             {
+                if (received == 0x16)
+                {
+                    timeoutTimer.Enabled = false;
+                    timeoutTimer.Enabled = true;
+                }
                 port.ReadExisting();
             }
         }
