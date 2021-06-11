@@ -1,22 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO.Ports;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace MD_FDI_Exelio
 {
     class ComPort
     {
         SerialPort Port = new SerialPort();
-        public delegate void Received(byte[] data, UInt16 len);
+        public delegate void Received(byte[] data, ushort len);
         public event Received ReceivedEvent;
         byte seq = 0x20;
-        private void OnRecievedEvent(byte[] data, UInt16 len)
+        private void OnRecievedEvent(byte[] data, ushort len)
         {
-            if (this.ReceivedEvent != null)
-                this.ReceivedEvent(data, len);
+            if (ReceivedEvent != null)
+            {
+                ReceivedEvent(data, len);
+            }
         }
 
         /// <summary>
@@ -40,7 +40,10 @@ namespace MD_FDI_Exelio
             try
             {
                 if (!(Port.IsOpen))
+                {
                     Port.Open();
+                }
+
                 return 0;
             }
             catch (Exception)
@@ -54,7 +57,7 @@ namespace MD_FDI_Exelio
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
-        public int SendData(byte [] data)
+        public int SendData(byte[] data)
         {
             List<byte> outMessage = new List<byte>();
             int i = 0;
@@ -98,9 +101,9 @@ namespace MD_FDI_Exelio
                     buffer[i] = (byte)port.ReadByte();
                 }
                 while (buffer[++i] != 0x03);
-                this.OnRecievedEvent(buffer, (UInt16)(len - 0x20));
+                OnRecievedEvent(buffer, (ushort)(len - 0x20));
             }
-            else if(preambula == 0x16)
+            else if (preambula == 0x16)
             {
 
             }

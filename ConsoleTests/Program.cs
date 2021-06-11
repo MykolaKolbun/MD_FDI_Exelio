@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace ConsoleTests
 {
@@ -18,11 +16,13 @@ namespace ConsoleTests
             byte[] status = { 0x88, 0x80, 0x88, 0xc7, 0x86, 0x98 };
             //List<byte> ls = Bcc(data);
             //byte seq = 0x21;
-            List<byte> outMessage = new List<byte>();
-            outMessage.Add(0x01);
-            outMessage.Add(0x34);
-            outMessage.Add(0x20);
-            outMessage.Add(0x30);
+            List<byte> outMessage = new List<byte>
+            {
+                0x01,
+                0x34,
+                0x20,
+                0x30
+            };
             outMessage.AddRange(data);
             outMessage.Add(0x04);
             outMessage.AddRange(status);
@@ -39,7 +39,7 @@ namespace ConsoleTests
             //{
             //    Console.WriteLine(b);
             //}
-            ReceivedHandler(outMessage.ToArray(),1);
+            ReceivedHandler(outMessage.ToArray(), 1);
             Console.ReadKey();
 
         }
@@ -94,7 +94,7 @@ namespace ConsoleTests
             return outMessage;
         }
 
-        static private List<byte>GetBytesFromDouble(double value)
+        static private List<byte> GetBytesFromDouble(double value)
         {
             string str = value.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture);
             List<byte> outMessage = new List<byte>();

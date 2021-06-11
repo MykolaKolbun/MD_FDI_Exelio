@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO.Ports;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 //using System.Timers;
 
 namespace TestForm
@@ -11,7 +9,7 @@ namespace TestForm
     class ComPortT
     {
         SerialPort Port = new SerialPort();
-        public delegate void Received(byte[] data, UInt16 len);
+        public delegate void Received(byte[] data, ushort len);
         public event Received ReceivedEvent;
         byte seq = 0x31;
 
@@ -21,10 +19,12 @@ namespace TestForm
         //byte[] buffer;
 
         //Timer timeoutTimer;
-        public void OnRecievedEvent(byte[] data, UInt16 len)
+        public void OnRecievedEvent(byte[] data, ushort len)
         {
-            if (this.ReceivedEvent != null)
-                this.ReceivedEvent(data, len);
+            if (ReceivedEvent != null)
+            {
+                ReceivedEvent(data, len);
+            }
         }
 
         /// <summary>
@@ -35,7 +35,7 @@ namespace TestForm
         public int Connect(string _portname)
         {
             //Насторойка порта
-            
+
             Port.PortName = _portname;
             Port.BaudRate = 57600;
             Port.Parity = Parity.None;
@@ -68,9 +68,11 @@ namespace TestForm
         /// <returns></returns>
         public int SendData(byte[] data)
         {
-            List<byte> outMessage = new List<byte>();
-            outMessage.Add((byte)(data.Length + 3 +32 ));
-            outMessage.Add(seq);
+            List<byte> outMessage = new List<byte>
+            {
+                (byte)(data.Length + 3 + 32),
+                seq
+            };
             outMessage.AddRange(data);
             outMessage.Add(0x05);
             outMessage.AddRange(Bcc(outMessage.ToArray()));
@@ -96,14 +98,16 @@ namespace TestForm
             if (received == 0x01)
             {
                 len = (byte)port.ReadByte();
-                for (int i = 0; i < (len-28); i++)
+                for (int i = 0; i < (len - 28); i++)
                 {
                     buffer[i] = (byte)port.ReadByte();
                 }
-                this.OnRecievedEvent(buffer, (UInt16)(len));
+                OnRecievedEvent(buffer, len);
             }
             else
+            {
                 port.ReadExisting();
+            }
         }
 
         /// <summary>

@@ -1,37 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace TestForm
 {
     class ExcelioLibT
     {
         ComPortT printer;
-        static UInt16 sync = 0;
+        static ushort sync = 0;
         public static Timer receivingTimer;
         public static byte ANS { get; set; }
         private bool received { get; set; }
-        public static UInt32 lastError { get; set; }
+        public static uint lastError { get; set; }
         public static int lastStatus { get; set; }
         private bool timeElapsed { get; set; }
 
         // Printer statuses
-        public  bool generalError = false;        //General error – “OR” of all errors marked with ‘#’.
-        public  bool printerError = false;        //Failure in printing mechanism, knife or presenter
-        public  bool noDisplay = false;           //Not connected a customer display
-        public  bool clockError = false;          //The clock needs settings
-        public  bool coverPaper = false;          //Paper cover is open 
-        public  bool fiscalNotOpened = false;     //A non-fiscal receipt is opened.
-        public  bool fiscalOpened = false;        //A fiscal receipt is opened
-        public  bool lowPaper = false;            //Not enough paper
-        public  bool outOfPaper = false;          //No paper – valid for both paper rolls.
-        public  bool fiscalMemoryError = false;   //Fiscal memory is fully engaged.
-        public  bool lowCriticalECL = false;      //Залишилась лише резервна ємність ECL, залишилося менше 2000 Г байт. Команди, записані в ECL, не виконуються.
-        public  bool low3000ECL = false;          //ECL дуже близький до своєї максимальної ємності, залишилося менше 3000 Г байт. Цей прапор призначений лише для інформації і не впливає на жодну команду.
-        public  bool low4000ECL = false;          //ECL близький до своєї максимальної ємності, залишилося менше 4000 Г байт. Цей прапор призначений лише для інформації і не впливає на жодну команду.
+        public bool generalError = false;        //General error – “OR” of all errors marked with ‘#’.
+        public bool printerError = false;        //Failure in printing mechanism, knife or presenter
+        public bool noDisplay = false;           //Not connected a customer display
+        public bool clockError = false;          //The clock needs settings
+        public bool coverPaper = false;          //Paper cover is open 
+        public bool fiscalNotOpened = false;     //A non-fiscal receipt is opened.
+        public bool fiscalOpened = false;        //A fiscal receipt is opened
+        public bool lowPaper = false;            //Not enough paper
+        public bool outOfPaper = false;          //No paper – valid for both paper rolls.
+        public bool fiscalMemoryError = false;   //Fiscal memory is fully engaged.
+        public bool lowCriticalECL = false;      //Залишилась лише резервна ємність ECL, залишилося менше 2000 Г байт. Команди, записані в ECL, не виконуються.
+        public bool low3000ECL = false;          //ECL дуже близький до своєї максимальної ємності, залишилося менше 3000 Г байт. Цей прапор призначений лише для інформації і не впливає на жодну команду.
+        public bool low4000ECL = false;          //ECL близький до своєї максимальної ємності, залишилося менше 4000 Г байт. Цей прапор призначений лише для інформації і не впливає на жодну команду.
 
 
 
@@ -70,8 +68,10 @@ namespace TestForm
         public int OpenReceipt(int OpCode, string OpPwd, int TillNmb)
         {
             byte cmd = 0x30;
-            List<byte> outMessage = new List<byte>();
-            outMessage.Add(cmd);
+            List<byte> outMessage = new List<byte>
+            {
+                cmd
+            };
             //outMessage.AddRange(GetBytes(OpCode));
             outMessage.AddRange(Encoding.ASCII.GetBytes(OpCode.ToString()));
             outMessage.Add(0x2C);
@@ -93,12 +93,14 @@ namespace TestForm
         public int Sale(string prodDescr, double unitPrice, int qwant, string unit)
         {
             byte cmd = 0x31;
-            List<byte> outMessage = new List<byte>();
-            outMessage.Add(cmd);
+            List<byte> outMessage = new List<byte>
+            {
+                cmd
+            };
             outMessage.AddRange(Encoding.ASCII.GetBytes(prodDescr));
             outMessage.Add(0x09);
             outMessage.AddRange(GetBytes("A"));
-            outMessage.AddRange(GetBytes(unitPrice*qwant).ToArray());
+            outMessage.AddRange(GetBytes(unitPrice * qwant).ToArray());
             return printer.SendData(outMessage.ToArray());
         }
 
@@ -111,9 +113,11 @@ namespace TestForm
         public int Total(int type)
         {
             byte cmd = 0x35;
-            List<byte> outMessage = new List<byte>();
-            outMessage.Add(cmd);
-            outMessage.Add(0x09);
+            List<byte> outMessage = new List<byte>
+            {
+                cmd,
+                0x09
+            };
             switch (type)
             {
                 case 1:
@@ -135,8 +139,10 @@ namespace TestForm
         public int CloseReceipt()
         {
             byte cmd = 0x38;
-            List<byte> outMessage = new List<byte>();
-            outMessage.Add(cmd);
+            List<byte> outMessage = new List<byte>
+            {
+                cmd
+            };
             return printer.SendData(outMessage.ToArray());
         }
 
@@ -147,8 +153,10 @@ namespace TestForm
         public int VoidReceipt()
         {
             byte cmd = 0x39;
-            List<byte> outMessage = new List<byte>();
-            outMessage.Add(cmd);
+            List<byte> outMessage = new List<byte>
+            {
+                cmd
+            };
             return printer.SendData(outMessage.ToArray());
         }
 
@@ -159,17 +167,21 @@ namespace TestForm
         public int ZReport()
         {
             byte cmd = 0x45;
-            List<byte> outMessage = new List<byte>();
-            outMessage.Add(cmd);
-            outMessage.Add(0x31);
+            List<byte> outMessage = new List<byte>
+            {
+                cmd,
+                0x31
+            };
             return printer.SendData(outMessage.ToArray());
         }
 
         public int PrintZReport()
         {
             byte cmd = 0x78;
-            List<byte> outMessage = new List<byte>();
-            outMessage.Add(cmd);
+            List<byte> outMessage = new List<byte>
+            {
+                cmd
+            };
             outMessage.AddRange(GetBytes("K"));
             outMessage.Add(0x2C);
             outMessage.Add(0x33);
@@ -178,8 +190,10 @@ namespace TestForm
         public int XReport()
         {
             byte cmd = 0x78;
-            List<byte> outMessage = new List<byte>();
-            outMessage.Add(cmd);
+            List<byte> outMessage = new List<byte>
+            {
+                cmd
+            };
             outMessage.AddRange(GetBytes("K"));
             outMessage.Add(0x2C);
             outMessage.Add(0x31);
@@ -198,9 +212,11 @@ namespace TestForm
         public int CashInOut(double amount)
         {
             byte cmd = 0x46;
-            List<byte> outMessage = new List<byte>();
-            outMessage.Add(cmd);
-            outMessage.Add(0x2C);
+            List<byte> outMessage = new List<byte>
+            {
+                cmd,
+                0x2C
+            };
             outMessage.AddRange(GetBytes(amount));
             return printer.SendData(outMessage.ToArray());
         }
@@ -215,8 +231,10 @@ namespace TestForm
         public int OpenDoc()
         {
             byte cmd = 0x26;
-            List<byte> outMessage = new List<byte>();
-            outMessage.Add(cmd);
+            List<byte> outMessage = new List<byte>
+            {
+                cmd
+            };
             return printer.SendData(outMessage.ToArray());
         }
 
@@ -227,8 +245,10 @@ namespace TestForm
         public int CloseDoc()
         {
             byte cmd = 0x27;
-            List<byte> outMessage = new List<byte>();
-            outMessage.Add(cmd);
+            List<byte> outMessage = new List<byte>
+            {
+                cmd
+            };
             return printer.SendData(outMessage.ToArray());
         }
 
@@ -240,8 +260,10 @@ namespace TestForm
         {
             byte cmd = 0x2A;
             byte[] bText = Encoding.ASCII.GetBytes(text);
-            List<byte> outMessage = new List<byte>();
-            outMessage.Add(cmd);
+            List<byte> outMessage = new List<byte>
+            {
+                cmd
+            };
             outMessage.AddRange(bText);
             return printer.SendData(outMessage.ToArray());
         }
@@ -250,8 +272,10 @@ namespace TestForm
         {
             byte cmd = 0x36;
             byte[] bText = Encoding.ASCII.GetBytes(text);
-            List<byte> outMessage = new List<byte>();
-            outMessage.Add(cmd);
+            List<byte> outMessage = new List<byte>
+            {
+                cmd
+            };
             outMessage.AddRange(bText);
             return printer.SendData(outMessage.ToArray());
         }
@@ -271,8 +295,10 @@ namespace TestForm
         public int GetState()
         {
             byte cmd = 0x5A;
-            List<byte> outMessage = new List<byte>();
-            outMessage.Add(cmd);
+            List<byte> outMessage = new List<byte>
+            {
+                cmd
+            };
             return printer.SendData(outMessage.ToArray());
         }
 
@@ -324,7 +350,7 @@ namespace TestForm
             StatusHandler(status.ToArray());
         }
 
-        private int  StatusHandler(byte[] status)
+        private int StatusHandler(byte[] status)
         {
             int error = 0;
             byte first = status[0];
@@ -339,7 +365,7 @@ namespace TestForm
             clockError = IsBitSet(first, 2);
 
             coverPaper = IsBitSet(second, 5);  // Якщо кришка принтера відкрита.
-           
+
             lowCriticalECL = IsBitSet(third, 6);//2.6 = 1 Залишилась лише резервна ємність ECL, залишилося менше 2000 Г байт. Команди, записані в ECL, не виконуються.
             fiscalNotOpened = IsBitSet(third, 5);
             low3000ECL = IsBitSet(third, 4);
@@ -365,17 +391,34 @@ namespace TestForm
              */
 
             if (generalError)
+            {
                 error = 100;
+            }
+
             if (printerError)
+            {
                 error = 101;
+            }
+
             if (IsBitSet(first, 1))
+            {
                 error = 103;
+            }
+
             if (IsBitSet(first, 0))
+            {
                 error = 104;
+            }
+
             if (IsBitSet(second, 1))
+            {
                 error = 106;
+            }
+
             if (lowCriticalECL)
+            {
                 error = 105;
+            }
 
             return error;
         }

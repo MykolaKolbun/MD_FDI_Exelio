@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace MD_FDI_Exelio
 {
@@ -18,7 +15,7 @@ namespace MD_FDI_Exelio
         /// </summary>
         public Logger(string machineID)
         {
-            this.FilePath = $@"C:\Log\{machineID}_FiscalTrace-{DateTime.Now:yyyy-MM-dd}.txt";
+            FilePath = $@"C:\Log\{machineID}_FiscalTrace-{DateTime.Now:yyyy-MM-dd}.txt";
         }
 
         /// <summary>

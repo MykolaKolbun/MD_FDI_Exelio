@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Text;
-using System.Threading.Tasks;
 using System.Timers;
 
 namespace MD_FDI_Exelio
@@ -10,11 +7,11 @@ namespace MD_FDI_Exelio
     class ExellioLib
     {
         ComPort printer;
-        static UInt16 sync = 0;
+        static ushort sync = 0;
         public static Timer receivingTimer;
         public static byte ANS { get; set; }
         private bool received { get; set; }
-        public static UInt32 lastError { get; set; }
+        public static uint lastError { get; set; }
         public static int lastStatus { get; set; }
         private bool timeElapsed { get; set; }
 
@@ -49,8 +46,10 @@ namespace MD_FDI_Exelio
         int ClearDisplay()
         {
             byte cmd = 0x21;
-            List<byte> outMessage = new List<byte>();
-            outMessage.Add(cmd);
+            List<byte> outMessage = new List<byte>
+            {
+                cmd
+            };
             return printer.SendData(outMessage.ToArray());
         }
 
@@ -61,9 +60,11 @@ namespace MD_FDI_Exelio
         int TextToDisplay(string text)
         {
             byte cmd = 0x23;
-            byte [] bText = Encoding.ASCII.GetBytes(text);
-            List<byte> outMessage = new List<byte>();
-            outMessage.Add(cmd);
+            byte[] bText = Encoding.ASCII.GetBytes(text);
+            List<byte> outMessage = new List<byte>
+            {
+                cmd
+            };
             outMessage.AddRange(bText);
             return printer.SendData(outMessage.ToArray());
         }
@@ -84,8 +85,10 @@ namespace MD_FDI_Exelio
         int OpenDoc()
         {
             byte cmd = 0x26;
-            List<byte> outMessage = new List<byte>();
-            outMessage.Add(cmd);
+            List<byte> outMessage = new List<byte>
+            {
+                cmd
+            };
             return printer.SendData(outMessage.ToArray());
         }
 
@@ -96,8 +99,10 @@ namespace MD_FDI_Exelio
         int CloseDoc()
         {
             byte cmd = 0x27;
-            List<byte> outMessage = new List<byte>();
-            outMessage.Add(cmd);
+            List<byte> outMessage = new List<byte>
+            {
+                cmd
+            };
             return printer.SendData(outMessage.ToArray());
         }
 
@@ -109,8 +114,10 @@ namespace MD_FDI_Exelio
         {
             byte cmd = 0x2A;
             byte[] bText = Encoding.ASCII.GetBytes(text);
-            List<byte> outMessage = new List<byte>();
-            outMessage.Add(cmd);
+            List<byte> outMessage = new List<byte>
+            {
+                cmd
+            };
             outMessage.AddRange(bText);
             return printer.SendData(outMessage.ToArray());
         }
@@ -122,8 +129,10 @@ namespace MD_FDI_Exelio
         int PaperOut()
         {
             byte cmd = 0x2C;
-            List<byte> outMessage = new List<byte>();
-            outMessage.Add(cmd);
+            List<byte> outMessage = new List<byte>
+            {
+                cmd
+            };
             return printer.SendData(outMessage.ToArray());
         }
 
@@ -134,8 +143,10 @@ namespace MD_FDI_Exelio
         int CutPaper()
         {
             byte cmd = 0x2D;
-            List<byte> outMessage = new List<byte>();
-            outMessage.Add(cmd);
+            List<byte> outMessage = new List<byte>
+            {
+                cmd
+            };
             return printer.SendData(outMessage.ToArray());
         }
 
@@ -146,10 +157,12 @@ namespace MD_FDI_Exelio
         int OpenReceipt(byte OpCode, byte[] OpPwd, byte TillNmb)
         {
             byte cmd = 0x30;
-            List<byte> outMessage = new List<byte>();
-            outMessage.Add(cmd);
-            outMessage.Add(OpCode);
-            outMessage.Add(0x2C);
+            List<byte> outMessage = new List<byte>
+            {
+                cmd,
+                OpCode,
+                0x2C
+            };
             outMessage.AddRange(OpPwd);
             outMessage.Add(0x2C);
             outMessage.Add(TillNmb);

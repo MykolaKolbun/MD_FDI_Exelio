@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using SkiData.FiscalDevices;
+using System;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SkiData.FiscalDevices;
 
 namespace MD_FDI_Exelio
 {
-    public class FiscalDevice_APM: IFiscalDevice2, ICash
+    public class FiscalDevice_APM : IFiscalDevice2, ICash
     {
         public string DeviceId => throw new NotImplementedException();
 

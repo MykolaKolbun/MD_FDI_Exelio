@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace TestForm
 {
@@ -18,45 +15,7 @@ namespace TestForm
         /// </summary>
         public LoggerT(string machineID)
         {
-            this.FilePath = $@"C:\Log\{machineID}_FiscalTrace-{DateTime.Now:yyyy-MM-dd}.txt";
-        }
-
-        /// <summary>
-        /// Запись строки в лог файл. Перегруженый.
-        /// </summary>
-        /// <param name="mess">Сообщение (массив байтов)</param>
-        /// <param name="direction">Индикатор направления. True - к фискальному принтеру; False - ответ от фискального принтера</param>
-        public void logWrite(byte[] mess, bool direction)
-        {
-            //System.Text.Encoding.Default.GetString(mess);
-            string dateTime = DateTime.Now.ToString();
-            string dir;
-            StreamWriter sw = new StreamWriter(FilePath, true, System.Text.Encoding.UTF8);
-            if (direction)
-            { dir = ">>"; } // true if to printer
-            else { dir = "<<"; } // false if from printer
-            //StreamWriter sw = new StreamWriter(filePath);
-            sw.WriteLine("{0}: {1} {2}", dateTime, dir, Encoding.UTF8.GetString(mess));
-            sw.Close();
-        }
-
-        /// <summary>
-        /// Запись строки в лог файл. Перегруженый.
-        /// </summary>
-        /// <param name="mess">Сообщение (строка)</param>
-        /// <param name="direction">Индикатор направления. True - к фискальному принтеру; False - ответ от фискального принтера</param>
-        public void logWrite(string mess, bool direction)
-        {
-            //System.Text.Encoding.Default.GetString(mess);
-            string dateTime = DateTime.Now.ToString();
-            string dir;
-            StreamWriter sw = new StreamWriter(FilePath, true, Encoding.UTF8);
-            if (direction)
-            { dir = ">>"; } // true if to printer
-            else { dir = "<<"; } // false if from printer
-            //StreamWriter sw = new StreamWriter(filePath);
-            sw.WriteLine("{0}: {1} {2}", dateTime, dir, mess);
-            sw.Close();
+            FilePath = $@"C:\Log\{machineID}_FiscalTrace-{DateTime.Now:yyyy-MM-dd}.txt";
         }
 
         public void Write(string mess)
