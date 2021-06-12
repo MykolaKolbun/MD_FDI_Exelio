@@ -105,7 +105,7 @@ namespace TestForm
         /// <param name="amount">Paid amount</param>
         /// <param name="type">Payment type</param>
         /// <returns></returns>
-        public int Total(int type)
+        public int Total(int type, double sum)
         {
             byte cmd = 0x35;
             List<byte> outMessage = new List<byte>
@@ -124,6 +124,7 @@ namespace TestForm
                 default:
                     break;
             }
+            outMessage.AddRange(GetBytes(sum));
             return printer.SendData(outMessage.ToArray());
         }
 
@@ -203,8 +204,7 @@ namespace TestForm
             byte cmd = 0x46;
             List<byte> outMessage = new List<byte>
             {
-                cmd,
-                0x2C
+                cmd
             };
             outMessage.AddRange(GetBytes(amount));
             return printer.SendData(outMessage.ToArray());
@@ -315,6 +315,7 @@ namespace TestForm
             };
             return printer.SendData(outMessage.ToArray());
         }
+
         #endregion
 
         #region Private members
@@ -341,9 +342,8 @@ namespace TestForm
             ComPortT.sent = true;
         }
 
-        private int StatusHandler(byte[] status)
+        private void StatusHandler(byte[] status)
         {
-            int error = 0;
             byte first = status[0];
             byte second = status[1];
             byte third = status[2];
@@ -364,8 +364,10 @@ namespace TestForm
             low4000ECL = IsBitSet(third, 2);
             lowPaper = IsBitSet(third, 1);
             outOfPaper = IsBitSet(third, 0);
+        }
 
-            //88 80 88 c7 86 98   10001000  10000000  10001000  11000111  10000110  10011000
+        private int StatusAnalyzer()
+        {
             /*
              * 0 - No error
              * 3 - Connection error
@@ -380,7 +382,7 @@ namespace TestForm
              * 107 - Fiscal receipt already opened
              * 
              */
-
+            int error = 0;
             if (generalError)
             {
                 error = 100;
@@ -391,24 +393,9 @@ namespace TestForm
                 error = 101;
             }
 
-            if (IsBitSet(first, 1))
-            {
-                error = 103;
-            }
-
-            if (IsBitSet(first, 0))
-            {
-                error = 104;
-            }
-
-            if (IsBitSet(second, 1))
-            {
-                error = 106;
-            }
-
             if (lowCriticalECL)
             {
-                error = 105;
+                error = 102;
             }
 
             return error;

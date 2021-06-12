@@ -77,6 +77,8 @@ namespace TestForm
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
+            this.btnCashIn = new System.Windows.Forms.Button();
+            this.btnCashOut = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnConnect
@@ -591,11 +593,33 @@ namespace TestForm
             this.label4.TabIndex = 47;
             this.label4.Text = "Байт 3:";
             // 
+            // btnCashIn
+            // 
+            this.btnCashIn.Location = new System.Drawing.Point(13, 334);
+            this.btnCashIn.Name = "btnCashIn";
+            this.btnCashIn.Size = new System.Drawing.Size(95, 23);
+            this.btnCashIn.TabIndex = 48;
+            this.btnCashIn.Text = "CashIn";
+            this.btnCashIn.UseVisualStyleBackColor = true;
+            this.btnCashIn.Click += new System.EventHandler(this.btnCashIn_Click);
+            // 
+            // btnCashOut
+            // 
+            this.btnCashOut.Location = new System.Drawing.Point(13, 364);
+            this.btnCashOut.Name = "btnCashOut";
+            this.btnCashOut.Size = new System.Drawing.Size(96, 23);
+            this.btnCashOut.TabIndex = 49;
+            this.btnCashOut.Text = "CashOut";
+            this.btnCashOut.UseVisualStyleBackColor = true;
+            this.btnCashOut.Click += new System.EventHandler(this.btnCashOut_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(595, 450);
+            this.Controls.Add(this.btnCashOut);
+            this.Controls.Add(this.btnCashIn);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -701,6 +725,8 @@ namespace TestForm
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button btnCashIn;
+        private System.Windows.Forms.Button btnCashOut;
     }
 }
 

@@ -68,7 +68,8 @@ namespace TestForm
 
         private void btnPayment_Click(object sender, EventArgs e)
         {
-            log.Write($"Btn Open Receipt result: {printer.Total(1)}");
+            log.Write($"Btn Open Receipt result: {printer.Total(1, 0.3)}");
+            log.Write($"Btn Open Receipt result: {printer.Total(2, (1.5 - 0.3))}");
             SetCboxes();
         }
 
@@ -102,8 +103,17 @@ namespace TestForm
 
         private void btnSetTime_Click(object sender, EventArgs e)
         {
+        }
+
+        private void btnCashIn_Click(object sender, EventArgs e)
+        {
+            printer.CashInOut(125);
             SetCboxes();
-            printer.SetDateTime();
+        }
+
+        private void btnCashOut_Click(object sender, EventArgs e)
+        {
+            printer.CashInOut(-125);
             SetCboxes();
         }
     }
