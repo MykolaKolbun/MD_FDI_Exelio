@@ -83,36 +83,44 @@ namespace MD_FDI_Exelio
             connectionString = $"COM{configuration.CommunicationChannel}";
             Logger log = new Logger(MachineID);
             deviceState = new StateInfo(true, SkiDataErrorCode.Ok, "New connection");
-            int err = printer.Connect(connectionString);
-            if (err == 0)
+            try
             {
-                StatusChangedEvent(true, (int)deviceState.ErrorCode, "РРО подлючен");
-            }
-            else
-            {
-                ErrorAnalizer((uint)err);
-            }
-
-            SetTimer();
-            if (deviceState.FiscalDeviceReady)
-            {
-                try
+                int err = printer.Connect(connectionString);
+                if (err == 0)
                 {
-                    err = printer.PrinterStatus();
-                    if (err != 0)
+                    StatusChangedEvent(true, (int)deviceState.ErrorCode, "РРО подлючен");
+                }
+                else
+                {
+                    ErrorAnalizer((uint)err);
+                }
+
+                SetTimer();
+                if (deviceState.FiscalDeviceReady)
+                {
+                    try
                     {
-                        ErrorAnalizer((uint)err);
+                        err = printer.PrinterStatus();
+                        if (err != 0)
+                        {
+                            ErrorAnalizer((uint)err);
+                        }
+
+                        inTransaction = false;
                     }
+                    catch (Exception e)
+                    {
 
-                    inTransaction = false;
+                        log.Write($"FD  : Install - Exception: {e.Message}");
+                        StatusChangedEvent(false, (int)SkiDataErrorCode.DeviceError, e.Message);
+                        inTransaction = false;
+                    }
                 }
-                catch (Exception e)
-                {
-
-                    log.Write($"FD  : Install - Exception: {e.Message}");
-                    StatusChangedEvent(false, (int)SkiDataErrorCode.DeviceError, e.Message);
-                    inTransaction = false;
-                }
+            }
+            catch(Exception e)
+            {
+                log.Write($"FD  : Install Exception - {e.Message}");
+                inTransaction = false;
             }
             log.Write($"FD  : Install - {deviceState.FiscalDeviceReady}");
             inTransaction = false;
@@ -351,6 +359,7 @@ namespace MD_FDI_Exelio
                 Logger log = new Logger(MachineID);
                 log.Write($"FD  : Payment time out");
                 return new TransactionResult(false, "Transaction canceled by Time out");
+                inTransaction = false;
             }
         }
 

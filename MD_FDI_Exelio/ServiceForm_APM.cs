@@ -187,49 +187,84 @@ namespace MD_FDI_Exelio
 
         private void btnXRep_Click(object sender, EventArgs e)
         {
-            fd.ErrorAnalizer((uint)printer.XReport());
-            UpdateStatus();
+            try
+            {
+                fd.ErrorAnalizer((uint)printer.XReport());
+                UpdateStatus();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void btnZRep_Click(object sender, EventArgs e)
         {
-            printer.ZReport();
-            UpdateStatus();
+            try
+            {
+                printer.ZReport();
+                UpdateStatus();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void btnPrintEJ_Click(object sender, EventArgs e)
         {
-            printer.PrintZReport();
-            UpdateStatus();
+            try
+            {
+                printer.PrintZReport();
+                UpdateStatus();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void btnSale_Click(object sender, EventArgs e)
         {
-            double sum = double.Parse(tbSaleAmount.Text.Replace('.', ','));
-            switch (chbCashless.Checked)
+            try
             {
-                case true:
-                    printer.OpenReceipt(1, "0000", 1);
-                    printer.FiscalText("Special sale");
-                    printer.Sale("Parking", sum, 1, "Hrs");
-                    printer.Total(2, sum);
-                    printer.CloseReceipt();
-                    break;
-                case false:
-                    printer.OpenReceipt(1, "0000", 1);
-                    printer.FiscalText("Special sale");
-                    printer.Sale("Parking", sum, 1, "Hrs");
-                    printer.Total(1, sum);
-                    printer.CloseReceipt();
-                    break;
+                double sum = double.Parse(tbSaleAmount.Text.Replace('.', ','));
+                switch (chbCashless.Checked)
+                {
+                    case true:
+                        printer.OpenReceipt(1, "0000", 1);
+                        printer.FiscalText("Special sale");
+                        printer.Sale("Parking", sum, 1, "Hrs");
+                        printer.Total(2, sum);
+                        printer.CloseReceipt();
+                        break;
+                    case false:
+                        printer.OpenReceipt(1, "0000", 1);
+                        printer.FiscalText("Special sale");
+                        printer.Sale("Parking", sum, 1, "Hrs");
+                        printer.Total(1, sum);
+                        printer.CloseReceipt();
+                        break;
+                }
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
             UpdateStatus();
         }
 
         private void btnVoidFiscal_Click(object sender, EventArgs e)
         {
-            printer.VoidReceipt();
-            UpdateStatus();
+            try
+            {
+                printer.VoidReceipt();
+                UpdateStatus();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }
