@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Windows.Forms;
 
 namespace TestForm
@@ -26,7 +27,25 @@ namespace TestForm
 
         private void btnRunPaper_Click(object sender, EventArgs e)
         {
-            printer.PrinterStatus();
+            printer.FiscalText("---Raspunsul bancii----");
+            log.Write($"FD  : Transaction ID: {12}, device: {10}");
+
+            /*
+             * Terminal ID:                U0100144  ====================================                ACHITARE  RRN: 116814951500  Autorizare: 798762  AID: A0000000031010  APP: Visa  Tip tranzactie: Contactless  Client:  ************6501 CEC 12  Suma: 10.00 MDL  REUSIT  COD RASPUNS: 000  ====================================                MULTUMIM           Suport MAIB 24/24:            +373 22 303-555  ====================================  
+             * */
+
+            string receipt = GetReceipt(); //"Terminal ID:                U0100144  ====================================                ACHITARE  RRN: 116814951500  Autorizare: 798762  AID: A0000000031010  APP: Visa  Tip tranzactie: Contactless  Client:  ************6501 CEC 12  Suma: 10.00 MDL  REUSIT  COD RASPUNS: 000  ====================================                MULTUMIM           Suport MAIB 24/24:            +373 22 303-555  ====================================  ";
+            string[] lines = receipt.Split('\r', '\n');
+            log.Write($"Lines in receipt: {lines.Length}");
+            log.Write($"First {lines[0]}");
+            for (int line = 0; line < lines.Length; line++)
+            {
+                if (lines[line].Length > 1)
+                {
+                    printer.FiscalText(lines[line]);
+                }
+            }
+            printer.FiscalText("------------------------");
             SetCboxes();
         }
 
@@ -115,6 +134,17 @@ namespace TestForm
         {
             printer.CashInOut(-125);
             SetCboxes();
+        }
+
+        public string GetReceipt()
+        {
+            string path = @"c:\Arcus2\cheq.out";
+            string outString = "";
+            if (File.Exists(path))
+            {
+                outString = File.ReadAllText(path);
+            }
+            return outString;
         }
     }
 }

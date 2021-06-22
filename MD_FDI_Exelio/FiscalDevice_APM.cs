@@ -80,9 +80,10 @@ namespace MD_FDI_Exelio
             paymentMachineId = configuration.DeviceId;
             MachineID = paymentMachineId;
             paymentMachineName = configuration.DeviceName;
-            connectionString = $"COM{configuration.CommunicationChannel}";
+            connectionString = configuration.CommunicationChannel;
             Logger log = new Logger(MachineID);
             deviceState = new StateInfo(true, SkiDataErrorCode.Ok, "New connection");
+            log.Write($"Connection string: {connectionString}");
             try
             {
                 int err = printer.Connect(connectionString);
@@ -188,14 +189,16 @@ namespace MD_FDI_Exelio
                             try
                             {
                                 SQLConnect sql = new SQLConnect();
-                                printer.FiscalText("---Ответ банка----");
-                                log.Write($"FD  : Transaction ID: {transaction}");
-                                string[] lines = sql.GetTransactionFromDBbyDevice(paymentMachineId, transaction).Split('\n');
-
+                                printer.FiscalText("---Raspunsul bancii----");
+                                log.Write($"FD  : Transaction ID: {transaction}, device: {paymentMachineId}");
+                                string[] lines = sql.GetTransactionFromDBbyDevice(paymentMachineId, transaction).Split( '\r' ,'\n');
+                                log.Write($"Lines in receipt: {lines.Length}");
+                                log.Write($"First {lines[0]}");
                                 for (int line = 0; line < lines.Length; line++)
                                 {
                                     if (lines[line].Length > 1)
                                     {
+                                        log.Write($"{lines[line]}");
                                         printer.FiscalText(lines[line]);
                                     }
                                 }
@@ -232,13 +235,13 @@ namespace MD_FDI_Exelio
                                     receiptDone = receiptDone & ErrorAnalizer((uint)err);
                                 }
 
-                                err = printer.FiscalText($"   Въезд в:{myEntryTime.ToString(@"dd.MM.yy HH:mm:ss")}");
+                                err = printer.FiscalText($"    Intrat la:{myEntryTime.ToString(@"dd.MM.yy HH:mm:ss")}");
                                 if (err != 0)
                                 {
                                     receiptDone = receiptDone & ErrorAnalizer((uint)err);
                                 }
 
-                                err = printer.FiscalText($"Выехать до:{myExitTime.ToString(@"dd.MM.yy HH:mm:ss")}");
+                                err = printer.FiscalText($"Iesire pana la:{myExitTime.ToString(@"dd.MM.yy HH:mm:ss")}");
                                 if (err != 0)
                                 {
                                     receiptDone = receiptDone & ErrorAnalizer((uint)err);

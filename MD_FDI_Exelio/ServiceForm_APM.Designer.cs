@@ -101,16 +101,16 @@ namespace MD_FDI_Exelio
             this.groupBox1.Size = new System.Drawing.Size(308, 209);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Статус ФР";
+            this.groupBox1.Text = "Statutul registrului fiscal";
             // 
             // cbBlocked24
             // 
             this.cbBlocked24.AutoSize = true;
             this.cbBlocked24.Location = new System.Drawing.Point(8, 48);
             this.cbBlocked24.Name = "cbBlocked24";
-            this.cbBlocked24.Size = new System.Drawing.Size(140, 17);
+            this.cbBlocked24.Size = new System.Drawing.Size(92, 17);
             this.cbBlocked24.TabIndex = 14;
-            this.cbBlocked24.Text = "Заблокирован 24 часа";
+            this.cbBlocked24.Text = "Blocat, 24 ore";
             this.cbBlocked24.UseVisualStyleBackColor = true;
             // 
             // cbCMDforbiden
@@ -118,9 +118,9 @@ namespace MD_FDI_Exelio
             this.cbCMDforbiden.AutoSize = true;
             this.cbCMDforbiden.Location = new System.Drawing.Point(154, 94);
             this.cbCMDforbiden.Name = "cbCMDforbiden";
-            this.cbCMDforbiden.Size = new System.Drawing.Size(149, 17);
+            this.cbCMDforbiden.Size = new System.Drawing.Size(121, 17);
             this.cbCMDforbiden.TabIndex = 13;
-            this.cbCMDforbiden.Text = "Выполнение запрещено";
+            this.cbCMDforbiden.Text = "Executarea refuzata";
             this.cbCMDforbiden.UseVisualStyleBackColor = true;
             // 
             // cbAmountOverload
@@ -138,9 +138,9 @@ namespace MD_FDI_Exelio
             this.cbRAMReset.AutoSize = true;
             this.cbRAMReset.Location = new System.Drawing.Point(154, 48);
             this.cbRAMReset.Name = "cbRAMReset";
-            this.cbRAMReset.Size = new System.Drawing.Size(95, 17);
+            this.cbRAMReset.Size = new System.Drawing.Size(84, 17);
             this.cbRAMReset.TabIndex = 11;
-            this.cbRAMReset.Text = "ОП сброшена";
+            this.cbRAMReset.Text = "MO resetata";
             this.cbRAMReset.UseVisualStyleBackColor = true;
             // 
             // cbCoverOpened
@@ -148,9 +148,9 @@ namespace MD_FDI_Exelio
             this.cbCoverOpened.AutoSize = true;
             this.cbCoverOpened.Location = new System.Drawing.Point(154, 25);
             this.cbCoverOpened.Name = "cbCoverOpened";
-            this.cbCoverOpened.Size = new System.Drawing.Size(112, 17);
+            this.cbCoverOpened.Size = new System.Drawing.Size(96, 17);
             this.cbCoverOpened.TabIndex = 10;
-            this.cbCoverOpened.Text = "Крышка открыта";
+            this.cbCoverOpened.Text = "Capac deschis";
             this.cbCoverOpened.UseVisualStyleBackColor = true;
             // 
             // cbNoPaper
@@ -158,9 +158,9 @@ namespace MD_FDI_Exelio
             this.cbNoPaper.AutoSize = true;
             this.cbNoPaper.Location = new System.Drawing.Point(154, 163);
             this.cbNoPaper.Name = "cbNoPaper";
-            this.cbNoPaper.Size = new System.Drawing.Size(131, 17);
+            this.cbNoPaper.Size = new System.Drawing.Size(74, 17);
             this.cbNoPaper.TabIndex = 9;
-            this.cbNoPaper.Text = "Закончилась бумага";
+            this.cbNoPaper.Text = "Hirtie lipsa";
             this.cbNoPaper.UseVisualStyleBackColor = true;
             // 
             // cbLowPaper
@@ -168,9 +168,9 @@ namespace MD_FDI_Exelio
             this.cbLowPaper.AutoSize = true;
             this.cbLowPaper.Location = new System.Drawing.Point(154, 140);
             this.cbLowPaper.Name = "cbLowPaper";
-            this.cbLowPaper.Size = new System.Drawing.Size(92, 17);
+            this.cbLowPaper.Size = new System.Drawing.Size(106, 17);
             this.cbLowPaper.TabIndex = 8;
-            this.cbLowPaper.Text = "Мало бумаги";
+            this.cbLowPaper.Text = "Hirtie insuficienta";
             this.cbLowPaper.UseVisualStyleBackColor = true;
             // 
             // cbFiscalOpened
@@ -178,9 +178,9 @@ namespace MD_FDI_Exelio
             this.cbFiscalOpened.AutoSize = true;
             this.cbFiscalOpened.Location = new System.Drawing.Point(154, 117);
             this.cbFiscalOpened.Name = "cbFiscalOpened";
-            this.cbFiscalOpened.Size = new System.Drawing.Size(152, 17);
+            this.cbFiscalOpened.Size = new System.Drawing.Size(107, 17);
             this.cbFiscalOpened.TabIndex = 7;
-            this.cbFiscalOpened.Text = "Фискальный чек открыт";
+            this.cbFiscalOpened.Text = "Bonul fiscal initiat";
             this.cbFiscalOpened.UseVisualStyleBackColor = true;
             // 
             // cbEJ4000
@@ -188,9 +188,9 @@ namespace MD_FDI_Exelio
             this.cbEJ4000.AutoSize = true;
             this.cbEJ4000.Location = new System.Drawing.Point(8, 186);
             this.cbEJ4000.Name = "cbEJ4000";
-            this.cbEJ4000.Size = new System.Drawing.Size(140, 17);
+            this.cbEJ4000.Size = new System.Drawing.Size(144, 17);
             this.cbEJ4000.TabIndex = 6;
-            this.cbEJ4000.Text = "ЭЖ меньше 4000 байт";
+            this.cbEJ4000.Text = "RE mai mic de 4000 byte";
             this.cbEJ4000.UseVisualStyleBackColor = true;
             // 
             // cbEJ3000
@@ -198,9 +198,9 @@ namespace MD_FDI_Exelio
             this.cbEJ3000.AutoSize = true;
             this.cbEJ3000.Location = new System.Drawing.Point(8, 163);
             this.cbEJ3000.Name = "cbEJ3000";
-            this.cbEJ3000.Size = new System.Drawing.Size(140, 17);
+            this.cbEJ3000.Size = new System.Drawing.Size(144, 17);
             this.cbEJ3000.TabIndex = 5;
-            this.cbEJ3000.Text = "ЭЖ меньше 3000 байт";
+            this.cbEJ3000.Text = "RE mai mic de 3000 byte";
             this.cbEJ3000.UseVisualStyleBackColor = true;
             // 
             // cbEJ2000
@@ -208,9 +208,9 @@ namespace MD_FDI_Exelio
             this.cbEJ2000.AutoSize = true;
             this.cbEJ2000.Location = new System.Drawing.Point(8, 140);
             this.cbEJ2000.Name = "cbEJ2000";
-            this.cbEJ2000.Size = new System.Drawing.Size(140, 17);
+            this.cbEJ2000.Size = new System.Drawing.Size(144, 17);
             this.cbEJ2000.TabIndex = 4;
-            this.cbEJ2000.Text = "ЭЖ меньше 2000 байт";
+            this.cbEJ2000.Text = "RE mai mic de 2000 byte";
             this.cbEJ2000.UseVisualStyleBackColor = true;
             // 
             // cbClockErr
@@ -218,9 +218,9 @@ namespace MD_FDI_Exelio
             this.cbClockErr.AutoSize = true;
             this.cbClockErr.Location = new System.Drawing.Point(8, 117);
             this.cbClockErr.Name = "cbClockErr";
-            this.cbClockErr.Size = new System.Drawing.Size(138, 17);
+            this.cbClockErr.Size = new System.Drawing.Size(87, 17);
             this.cbClockErr.TabIndex = 3;
-            this.cbClockErr.Text = "Часы не установлены";
+            this.cbClockErr.Text = "Ora nesetata";
             this.cbClockErr.UseVisualStyleBackColor = true;
             // 
             // cbDispError
@@ -228,9 +228,9 @@ namespace MD_FDI_Exelio
             this.cbDispError.AutoSize = true;
             this.cbDispError.Location = new System.Drawing.Point(8, 94);
             this.cbDispError.Name = "cbDispError";
-            this.cbDispError.Size = new System.Drawing.Size(129, 17);
+            this.cbDispError.Size = new System.Drawing.Size(111, 17);
             this.cbDispError.TabIndex = 2;
-            this.cbDispError.Text = "Дисп. не подключен";
+            this.cbDispError.Text = "Ecran neconectat";
             this.cbDispError.UseVisualStyleBackColor = true;
             // 
             // cbMechErr
@@ -238,9 +238,9 @@ namespace MD_FDI_Exelio
             this.cbMechErr.AutoSize = true;
             this.cbMechErr.Location = new System.Drawing.Point(8, 71);
             this.cbMechErr.Name = "cbMechErr";
-            this.cbMechErr.Size = new System.Drawing.Size(102, 17);
+            this.cbMechErr.Size = new System.Drawing.Size(119, 17);
             this.cbMechErr.TabIndex = 1;
-            this.cbMechErr.Text = "Мех. проблема";
+            this.cbMechErr.Text = "Problema mecanica";
             this.cbMechErr.UseVisualStyleBackColor = true;
             // 
             // cbError
@@ -248,9 +248,9 @@ namespace MD_FDI_Exelio
             this.cbError.AutoSize = true;
             this.cbError.Location = new System.Drawing.Point(8, 25);
             this.cbError.Name = "cbError";
-            this.cbError.Size = new System.Drawing.Size(66, 17);
+            this.cbError.Size = new System.Drawing.Size(57, 17);
             this.cbError.TabIndex = 0;
-            this.cbError.Text = "Ошибка";
+            this.cbError.Text = "Eroare";
             this.cbError.UseVisualStyleBackColor = true;
             // 
             // groupBox2
@@ -263,7 +263,7 @@ namespace MD_FDI_Exelio
             this.groupBox2.Size = new System.Drawing.Size(279, 271);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Дополнительные фискальные функции";
+            this.groupBox2.Text = "Functii fiscale suplimentare";
             // 
             // groupBox5
             // 
@@ -278,7 +278,7 @@ namespace MD_FDI_Exelio
             this.groupBox5.Size = new System.Drawing.Size(262, 103);
             this.groupBox5.TabIndex = 2;
             this.groupBox5.TabStop = false;
-            this.groupBox5.Text = "Продажа";
+            this.groupBox5.Text = "Vinzare";
             // 
             // btnVoidFiscal
             // 
@@ -287,7 +287,7 @@ namespace MD_FDI_Exelio
             this.btnVoidFiscal.Name = "btnVoidFiscal";
             this.btnVoidFiscal.Size = new System.Drawing.Size(100, 23);
             this.btnVoidFiscal.TabIndex = 5;
-            this.btnVoidFiscal.Text = "Отмена чека";
+            this.btnVoidFiscal.Text = "Anularea bonului";
             this.btnVoidFiscal.UseVisualStyleBackColor = false;
             this.btnVoidFiscal.Click += new System.EventHandler(this.btnVoidFiscal_Click);
             // 
@@ -296,9 +296,9 @@ namespace MD_FDI_Exelio
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(104, 22);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(44, 13);
+            this.label3.Size = new System.Drawing.Size(37, 13);
             this.label3.TabIndex = 4;
-            this.label3.Text = "Сумма:";
+            this.label3.Text = "Suma:";
             // 
             // tbSaleAmount
             // 
@@ -315,7 +315,7 @@ namespace MD_FDI_Exelio
             this.btnSale.Name = "btnSale";
             this.btnSale.Size = new System.Drawing.Size(100, 23);
             this.btnSale.TabIndex = 2;
-            this.btnSale.Text = "Продажа";
+            this.btnSale.Text = "Vinzare";
             this.btnSale.UseVisualStyleBackColor = false;
             this.btnSale.Click += new System.EventHandler(this.btnSale_Click);
             // 
@@ -324,9 +324,9 @@ namespace MD_FDI_Exelio
             this.chbCashless.AutoSize = true;
             this.chbCashless.Location = new System.Drawing.Point(8, 46);
             this.chbCashless.Name = "chbCashless";
-            this.chbCashless.Size = new System.Drawing.Size(92, 17);
+            this.chbCashless.Size = new System.Drawing.Size(88, 17);
             this.chbCashless.TabIndex = 1;
-            this.chbCashless.Text = "Безналичная";
+            this.chbCashless.Text = "Fara numerar";
             this.chbCashless.UseVisualStyleBackColor = true;
             // 
             // chbReturn
@@ -334,9 +334,9 @@ namespace MD_FDI_Exelio
             this.chbReturn.AutoSize = true;
             this.chbReturn.Location = new System.Drawing.Point(8, 22);
             this.chbReturn.Name = "chbReturn";
-            this.chbReturn.Size = new System.Drawing.Size(68, 17);
+            this.chbReturn.Size = new System.Drawing.Size(74, 17);
             this.chbReturn.TabIndex = 0;
-            this.chbReturn.Text = "Возврат";
+            this.chbReturn.Text = "Intoarcere";
             this.chbReturn.UseVisualStyleBackColor = true;
             // 
             // groupBox4
@@ -358,7 +358,7 @@ namespace MD_FDI_Exelio
             this.btnPrintEJ.Name = "btnPrintEJ";
             this.btnPrintEJ.Size = new System.Drawing.Size(80, 25);
             this.btnPrintEJ.TabIndex = 2;
-            this.btnPrintEJ.Text = "Печать ЕЖ";
+            this.btnPrintEJ.Text = "Imprimarea RE";
             this.btnPrintEJ.UseVisualStyleBackColor = false;
             this.btnPrintEJ.Click += new System.EventHandler(this.btnPrintEJ_Click);
             // 
@@ -369,7 +369,7 @@ namespace MD_FDI_Exelio
             this.btnZRep.Name = "btnZRep";
             this.btnZRep.Size = new System.Drawing.Size(80, 25);
             this.btnZRep.TabIndex = 1;
-            this.btnZRep.Text = "Z-Отчет";
+            this.btnZRep.Text = "Z-Raport";
             this.btnZRep.UseVisualStyleBackColor = false;
             this.btnZRep.Click += new System.EventHandler(this.btnZRep_Click);
             // 
@@ -380,7 +380,7 @@ namespace MD_FDI_Exelio
             this.btnXRep.Name = "btnXRep";
             this.btnXRep.Size = new System.Drawing.Size(80, 25);
             this.btnXRep.TabIndex = 0;
-            this.btnXRep.Text = "Х-Отчет";
+            this.btnXRep.Text = "X-Raport";
             this.btnXRep.UseVisualStyleBackColor = false;
             this.btnXRep.Click += new System.EventHandler(this.btnXRep_Click);
             // 
@@ -397,25 +397,25 @@ namespace MD_FDI_Exelio
             this.groupBox3.Size = new System.Drawing.Size(262, 75);
             this.groupBox3.TabIndex = 0;
             this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Внесение/Вынесение";
+            this.groupBox3.Text = "Introducere/Extragere";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(5, 51);
+            this.label2.Location = new System.Drawing.Point(53, 52);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(103, 13);
+            this.label2.Size = new System.Drawing.Size(55, 13);
             this.label2.TabIndex = 5;
-            this.label2.Text = "Служебный вынос:";
+            this.label2.Text = "Extragere:";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(13, 22);
+            this.label1.Location = new System.Drawing.Point(44, 22);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(95, 13);
+            this.label1.Size = new System.Drawing.Size(64, 13);
             this.label1.TabIndex = 4;
-            this.label1.Text = "Служебный внос:";
+            this.label1.Text = "Introducere:";
             // 
             // tbCashOutAmount
             // 
@@ -442,7 +442,7 @@ namespace MD_FDI_Exelio
             this.btnCashOut.Name = "btnCashOut";
             this.btnCashOut.Size = new System.Drawing.Size(75, 25);
             this.btnCashOut.TabIndex = 1;
-            this.btnCashOut.Text = "Вынос";
+            this.btnCashOut.Text = "Extragere";
             this.btnCashOut.UseVisualStyleBackColor = false;
             this.btnCashOut.Click += new System.EventHandler(this.btnCashOut_Click);
             // 
@@ -453,7 +453,7 @@ namespace MD_FDI_Exelio
             this.btnCashIn.Name = "btnCashIn";
             this.btnCashIn.Size = new System.Drawing.Size(75, 25);
             this.btnCashIn.TabIndex = 0;
-            this.btnCashIn.Text = "Внос";
+            this.btnCashIn.Text = "Introducere";
             this.btnCashIn.UseVisualStyleBackColor = false;
             this.btnCashIn.Click += new System.EventHandler(this.btnCashIn_Click);
             // 
@@ -462,9 +462,9 @@ namespace MD_FDI_Exelio
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(40, 270);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(101, 13);
+            this.label4.Size = new System.Drawing.Size(84, 13);
             this.label4.TabIndex = 3;
-            this.label4.Text = "Системное время:";
+            this.label4.Text = "Timpul in sistem:";
             // 
             // lblTime
             // 
@@ -503,7 +503,7 @@ namespace MD_FDI_Exelio
             this.Controls.Add(this.groupBox1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "ServiceForm_APM";
-            this.Text = "Дополнительные операции";
+            this.Text = "Operatiuni suplimentare";
             this.Load += new System.EventHandler(this.ServiceForm_APM_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

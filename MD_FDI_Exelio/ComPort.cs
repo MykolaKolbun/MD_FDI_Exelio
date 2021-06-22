@@ -40,7 +40,7 @@ namespace MD_FDI_Exelio
             };
             timeoutTimer.Elapsed += TimeoutTimer_Elapsed;
             Port.PortName = _portname;
-            Port.BaudRate = 57600;
+            Port.BaudRate = 115200;
             Port.Parity = Parity.None;
             Port.DataBits = 8;
             Port.StopBits = StopBits.One;
