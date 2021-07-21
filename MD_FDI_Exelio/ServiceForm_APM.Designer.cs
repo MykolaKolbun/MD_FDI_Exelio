@@ -54,7 +54,6 @@ namespace MD_FDI_Exelio
             this.tbSaleAmount = new System.Windows.Forms.TextBox();
             this.btnSale = new System.Windows.Forms.Button();
             this.chbCashless = new System.Windows.Forms.CheckBox();
-            this.chbReturn = new System.Windows.Forms.CheckBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.btnPrintEJ = new System.Windows.Forms.Button();
             this.btnZRep = new System.Windows.Forms.Button();
@@ -70,6 +69,9 @@ namespace MD_FDI_Exelio
             this.lblTime = new System.Windows.Forms.Label();
             this.ClockTimer = new System.Windows.Forms.Timer(this.components);
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.btnUpdate = new System.Windows.Forms.Button();
+            this.label5 = new System.Windows.Forms.Label();
+            this.tbxAmount = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox5.SuspendLayout();
@@ -255,12 +257,15 @@ namespace MD_FDI_Exelio
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.tbxAmount);
             this.groupBox2.Controls.Add(this.groupBox5);
+            this.groupBox2.Controls.Add(this.label5);
             this.groupBox2.Controls.Add(this.groupBox4);
+            this.groupBox2.Controls.Add(this.btnUpdate);
             this.groupBox2.Controls.Add(this.groupBox3);
             this.groupBox2.Location = new System.Drawing.Point(318, 4);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(279, 271);
+            this.groupBox2.Size = new System.Drawing.Size(272, 270);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Functii fiscale suplimentare";
@@ -272,10 +277,9 @@ namespace MD_FDI_Exelio
             this.groupBox5.Controls.Add(this.tbSaleAmount);
             this.groupBox5.Controls.Add(this.btnSale);
             this.groupBox5.Controls.Add(this.chbCashless);
-            this.groupBox5.Controls.Add(this.chbReturn);
             this.groupBox5.Location = new System.Drawing.Point(7, 160);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(262, 103);
+            this.groupBox5.Size = new System.Drawing.Size(262, 76);
             this.groupBox5.TabIndex = 2;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Vinzare";
@@ -283,9 +287,9 @@ namespace MD_FDI_Exelio
             // btnVoidFiscal
             // 
             this.btnVoidFiscal.BackColor = System.Drawing.SystemColors.ScrollBar;
-            this.btnVoidFiscal.Location = new System.Drawing.Point(157, 73);
+            this.btnVoidFiscal.Location = new System.Drawing.Point(8, 44);
             this.btnVoidFiscal.Name = "btnVoidFiscal";
-            this.btnVoidFiscal.Size = new System.Drawing.Size(100, 23);
+            this.btnVoidFiscal.Size = new System.Drawing.Size(108, 23);
             this.btnVoidFiscal.TabIndex = 5;
             this.btnVoidFiscal.Text = "Anularea bonului";
             this.btnVoidFiscal.UseVisualStyleBackColor = false;
@@ -322,22 +326,12 @@ namespace MD_FDI_Exelio
             // chbCashless
             // 
             this.chbCashless.AutoSize = true;
-            this.chbCashless.Location = new System.Drawing.Point(8, 46);
+            this.chbCashless.Location = new System.Drawing.Point(8, 22);
             this.chbCashless.Name = "chbCashless";
             this.chbCashless.Size = new System.Drawing.Size(88, 17);
-            this.chbCashless.TabIndex = 1;
+            this.chbCashless.TabIndex = 0;
             this.chbCashless.Text = "Fara numerar";
             this.chbCashless.UseVisualStyleBackColor = true;
-            // 
-            // chbReturn
-            // 
-            this.chbReturn.AutoSize = true;
-            this.chbReturn.Location = new System.Drawing.Point(8, 22);
-            this.chbReturn.Name = "chbReturn";
-            this.chbReturn.Size = new System.Drawing.Size(74, 17);
-            this.chbReturn.TabIndex = 0;
-            this.chbReturn.Text = "Intoarcere";
-            this.chbReturn.UseVisualStyleBackColor = true;
             // 
             // groupBox4
             // 
@@ -354,9 +348,9 @@ namespace MD_FDI_Exelio
             // btnPrintEJ
             // 
             this.btnPrintEJ.BackColor = System.Drawing.SystemColors.ScrollBar;
-            this.btnPrintEJ.Location = new System.Drawing.Point(174, 19);
+            this.btnPrintEJ.Location = new System.Drawing.Point(164, 19);
             this.btnPrintEJ.Name = "btnPrintEJ";
-            this.btnPrintEJ.Size = new System.Drawing.Size(80, 25);
+            this.btnPrintEJ.Size = new System.Drawing.Size(90, 25);
             this.btnPrintEJ.TabIndex = 2;
             this.btnPrintEJ.Text = "Imprimarea RE";
             this.btnPrintEJ.UseVisualStyleBackColor = false;
@@ -365,9 +359,9 @@ namespace MD_FDI_Exelio
             // btnZRep
             // 
             this.btnZRep.BackColor = System.Drawing.SystemColors.ScrollBar;
-            this.btnZRep.Location = new System.Drawing.Point(90, 19);
+            this.btnZRep.Location = new System.Drawing.Point(88, 19);
             this.btnZRep.Name = "btnZRep";
-            this.btnZRep.Size = new System.Drawing.Size(80, 25);
+            this.btnZRep.Size = new System.Drawing.Size(70, 25);
             this.btnZRep.TabIndex = 1;
             this.btnZRep.Text = "Z-Raport";
             this.btnZRep.UseVisualStyleBackColor = false;
@@ -378,7 +372,7 @@ namespace MD_FDI_Exelio
             this.btnXRep.BackColor = System.Drawing.SystemColors.ScrollBar;
             this.btnXRep.Location = new System.Drawing.Point(6, 19);
             this.btnXRep.Name = "btnXRep";
-            this.btnXRep.Size = new System.Drawing.Size(80, 25);
+            this.btnXRep.Size = new System.Drawing.Size(76, 25);
             this.btnXRep.TabIndex = 0;
             this.btnXRep.Text = "X-Raport";
             this.btnXRep.UseVisualStyleBackColor = false;
@@ -460,7 +454,7 @@ namespace MD_FDI_Exelio
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(40, 270);
+            this.label4.Location = new System.Drawing.Point(39, 270);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(84, 13);
             this.label4.TabIndex = 3;
@@ -469,7 +463,7 @@ namespace MD_FDI_Exelio
             // lblTime
             // 
             this.lblTime.AutoSize = true;
-            this.lblTime.Location = new System.Drawing.Point(147, 270);
+            this.lblTime.Location = new System.Drawing.Point(154, 270);
             this.lblTime.Name = "lblTime";
             this.lblTime.Size = new System.Drawing.Size(49, 13);
             this.lblTime.TabIndex = 4;
@@ -490,12 +484,39 @@ namespace MD_FDI_Exelio
             this.pictureBox1.TabIndex = 2;
             this.pictureBox1.TabStop = false;
             // 
+            // btnUpdate
+            // 
+            this.btnUpdate.BackColor = System.Drawing.SystemColors.ScrollBar;
+            this.btnUpdate.Location = new System.Drawing.Point(164, 240);
+            this.btnUpdate.Name = "btnUpdate";
+            this.btnUpdate.Size = new System.Drawing.Size(100, 23);
+            this.btnUpdate.TabIndex = 5;
+            this.btnUpdate.Text = "Actualizați";
+            this.btnUpdate.UseVisualStyleBackColor = false;
+            this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(33, 245);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(48, 13);
+            this.label5.TabIndex = 6;
+            this.label5.Text = "In sertar:";
+            // 
+            // tbxAmount
+            // 
+            this.tbxAmount.Location = new System.Drawing.Point(87, 242);
+            this.tbxAmount.Name = "tbxAmount";
+            this.tbxAmount.Size = new System.Drawing.Size(71, 20);
+            this.tbxAmount.TabIndex = 7;
+            // 
             // ServiceForm_APM
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DarkGray;
-            this.ClientSize = new System.Drawing.Size(602, 290);
+            this.ClientSize = new System.Drawing.Size(595, 288);
             this.Controls.Add(this.lblTime);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.pictureBox1);
@@ -508,6 +529,7 @@ namespace MD_FDI_Exelio
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
             this.groupBox4.ResumeLayout(false);
@@ -550,7 +572,6 @@ namespace MD_FDI_Exelio
         private System.Windows.Forms.TextBox tbSaleAmount;
         private System.Windows.Forms.Button btnSale;
         private System.Windows.Forms.CheckBox chbCashless;
-        private System.Windows.Forms.CheckBox chbReturn;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.Button btnPrintEJ;
         private System.Windows.Forms.Button btnZRep;
@@ -560,5 +581,8 @@ namespace MD_FDI_Exelio
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label lblTime;
         private System.Windows.Forms.Timer ClockTimer;
+        private System.Windows.Forms.Button btnUpdate;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox tbxAmount;
     }
 }

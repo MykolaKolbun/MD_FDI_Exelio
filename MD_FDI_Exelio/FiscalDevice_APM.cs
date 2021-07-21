@@ -426,20 +426,12 @@ namespace MD_FDI_Exelio
             bool receiptDone = true;
             inTransaction = true;
             uint amount = 0;
-            if (cash.Amount >= 0)
-            {
-                amount = Convert.ToUInt32(cash.Amount) * 100;
-            }
-            else
-            {
-                amount = Convert.ToUInt32(-cash.Amount) * 100;
-            }
-
+            amount = Convert.ToUInt32(cash.Amount);
             try
             {
                 if (deviceState.FiscalDeviceReady)
                 {
-                    int err = printer.CashInOut((double)cash.Amount);
+                    int err = printer.CashInOut((double)amount);
                     if (err != 0)
                     {
                         receiptDone = ErrorAnalizer((uint)err);
@@ -469,21 +461,21 @@ namespace MD_FDI_Exelio
             Logger log = new Logger(MachineID);
             bool receiptDone = true;
             inTransaction = true;
-            uint amount = 0;
+            double amount = 0;
             if (cash.Amount >= 0)
             {
-                amount = Convert.ToUInt32(cash.Amount) * 100;
+                amount = Convert.ToDouble(cash.Amount);
             }
             else
             {
-                amount = Convert.ToUInt32(-cash.Amount) * 100;
+                amount = Convert.ToDouble(-cash.Amount);
             }
 
             try
             {
                 if (deviceState.FiscalDeviceReady)
                 {
-                    int err = printer.CashInOut(-(double)cash.Amount);
+                    int err = printer.CashInOut(Convert.ToDouble(cash.Amount));
                     if (err != 0)
                     {
                         receiptDone = ErrorAnalizer((uint)err);
@@ -493,9 +485,9 @@ namespace MD_FDI_Exelio
                 log.Write($"FD  : CashOut amount: {cash.Amount} from source: {cash.Source.ToString()}, result: {deviceState.FiscalDeviceReady & receiptDone}");
                 if (deviceState.FiscalDeviceReady)
                 {
-                    Transaction tr = new Transaction(3, amount);
+                    Transaction tr = new Transaction(4, Convert.ToUInt32(amount));
                     tr.UpdateData(tr);
-                    log.Write($"TR  : CashIn Serialization: {amount}");
+                    log.Write($"TR  : CashOut Serialization: {amount}");
                 }
             }
             catch (Exception e)
@@ -622,11 +614,14 @@ namespace MD_FDI_Exelio
 
             switch (error)
             {
+                case 0:
+                    StatusChangedEvent(true, (int)SkiDataErrorCode.Ok, "Ok");
+                    return true;
                 case 1:
-                    StatusChangedEvent(false, (int)SkiDataErrorCode.CommunicationError, "Ошибка");
+                    StatusChangedEvent(false, (int)SkiDataErrorCode.CommunicationError, "Error");
                     return false;
                 case 2:
-                    StatusChangedEvent(false, (int)SkiDataErrorCode.CommunicationError, "Ошибка");
+                    StatusChangedEvent(false, (int)SkiDataErrorCode.CommunicationError, "Timeout");
                     return false;
                 case 3:
                     StatusChangedEvent(false, (int)SkiDataErrorCode.CommunicationError, "Нет связи с принтером");

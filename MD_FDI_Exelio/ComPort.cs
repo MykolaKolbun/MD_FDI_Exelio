@@ -34,7 +34,7 @@ namespace MD_FDI_Exelio
         public int Connect(string _portname)
         {
             //Насторойка порта
-            timeoutTimer = new Timer(5000)
+            timeoutTimer = new Timer(9000)
             {
                 AutoReset = false
             };
@@ -54,7 +54,6 @@ namespace MD_FDI_Exelio
                 if (!(Port.IsOpen))
                 {
                     Port.Open();
-                    //Port.ReadExisting();
                 }
                 return 0;
             }
@@ -87,7 +86,7 @@ namespace MD_FDI_Exelio
             outMessage.AddRange(Bcc(outMessage.ToArray()));
             outMessage.Add(0x03);
             outMessage.Insert(0, 0x01);
-            seq++;
+            
             int error = Send(outMessage.ToArray());
             sent = false;
             timeout = false;
@@ -98,7 +97,10 @@ namespace MD_FDI_Exelio
             {
                 error = 2;
             }
-
+            if (seq >= 0x7e)
+                seq = 0x31;
+            else
+                seq++;
             return error;
         }
 
@@ -110,30 +112,40 @@ namespace MD_FDI_Exelio
         /// 
         public void DataReceivedHandler(object sender, SerialDataReceivedEventArgs e)
         {
-            SerialPort port = (SerialPort)sender;
-            port.ReadTimeout = 6000;
-            var buffer = new byte[256];
-            byte received;
-            byte len;
-            received = (byte)port.ReadByte();
-            if (received == 0x01)
+            try
             {
-                len = (byte)port.ReadByte();
-                for (int i = 0; i < (len - 28); i++)
-                {
-                    buffer[i] = (byte)port.ReadByte();
-                }
-                timeoutTimer.Enabled = false;
-                OnRecievedEvent(buffer, len);
-            }
-            else
-            {
+                SerialPort port = (SerialPort)sender;
+                port.ReadTimeout = 10000;
+                var buffer = new byte[256];
+                byte received;
+                byte len;
+            Reread:
+                received = (byte)port.ReadByte();
                 if (received == 0x16)
                 {
                     timeoutTimer.Enabled = false;
                     timeoutTimer.Enabled = true;
+                    goto Reread;
                 }
-                port.ReadExisting();
+                
+                if (received == 0x01)
+                {
+                    len = (byte)port.ReadByte();
+                    for (int i = 0; i < (len - 28); i++)
+                    {
+                        buffer[i] = (byte)port.ReadByte();
+                    }
+                    timeoutTimer.Enabled = false;
+                    OnRecievedEvent(buffer, len);
+                }
+                else
+                {
+                    port.ReadExisting();
+                }
+            }
+            catch
+            {
+
             }
         }
 

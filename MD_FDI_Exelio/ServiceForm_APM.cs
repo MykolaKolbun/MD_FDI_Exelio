@@ -23,6 +23,7 @@ namespace MD_FDI_Exelio
                 StatusChangedEvent(isready, errorCode, errorMessage);
             }
         }
+
         public ServiceForm_APM(ExellioLib printer, string machineID, FiscalDevice_APM fd)
         {
             InitializeComponent();
@@ -30,12 +31,20 @@ namespace MD_FDI_Exelio
             this.printer = printer;
             MachineId = machineID;
             this.fd = fd;
+            Transaction tr = new Transaction();
+            tbxAmount.Text = tr.Get().ToString();
+            ClockTimer.Enabled = true;
+        }
+
+         ~ServiceForm_APM()
+        {
+            ClockTimer.Enabled = false;
         }
 
         private void Tick(object sender, EventArgs e)
         {
             lblTime.Text = DateTime.Now.ToString("dd-MM-yy HH: mm:ss");
-        }
+        } 
 
         private void ServiceForm_APM_Load(object sender, EventArgs e)
         {
@@ -54,21 +63,14 @@ namespace MD_FDI_Exelio
                     try
                     {
                         double sum = double.Parse(tbCashInAmount.Text.Replace('.', ','));
-                        if (fd.deviceState.FiscalDeviceReady & receiptDone)
-                        {
-                            int err = printer.CashInOut(sum);
-                            if (err != 0)
-                            {
-                                log.Write($"FDFS: CashIn (InOut) error: {err}");
-                                receiptDone &= fd.ErrorAnalizer((uint)err);
-                            }
-                        }
-                        if (fd.deviceState.FiscalDeviceReady & receiptDone)
+                        fd.ErrorAnalizer((uint)printer.CashInOut(sum));
+                        UpdateStatus();
+                        if (fd.deviceState.FiscalDeviceReady)
                         {
                             Transaction tr = new Transaction(3, Convert.ToUInt32(sum));
                             tr.UpdateData(tr);
                         }
-                        log.Write($"FDFS: CashIn amount: {sum}, result: {fd.deviceState.FiscalDeviceReady & receiptDone}");
+                        log.Write($"FDFS: CashIn amount: {sum}, result: {fd.deviceState.FiscalDeviceReady}");
                     }
                     catch (Exception ex)
                     {
@@ -84,7 +86,7 @@ namespace MD_FDI_Exelio
                     try
                     {
                         double sum = double.Parse(tbCashOutAmount.Text.Replace('.', ','));
-                        if (fd.deviceState.FiscalDeviceReady & receiptDone)
+                        if (fd.deviceState.FiscalDeviceReady)
                         {
                             int err = printer.CashInOut(-sum);
                             if (err != 0)
@@ -94,12 +96,12 @@ namespace MD_FDI_Exelio
                             }
                         }
 
-                        if (fd.deviceState.FiscalDeviceReady & receiptDone)
+                        if (fd.deviceState.FiscalDeviceReady)
                         {
                             Transaction tr = new Transaction(4, Convert.ToUInt32(sum));
                             tr.UpdateData(tr);
                         }
-                        log.Write($"FDFS: CashOut amount: {sum}, result: {fd.deviceState.FiscalDeviceReady & receiptDone}");
+                        log.Write($"FDFS: CashOut amount: {sum}, result: {fd.deviceState.FiscalDeviceReady}");
                     }
                     catch (Exception ex)
                     {
@@ -265,6 +267,14 @@ namespace MD_FDI_Exelio
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        private void btnUpdate_Click(object sender, EventArgs e)
+        {
+            UInt32 newAmount = 0;
+            UInt32.TryParse(tbxAmount.Text, out newAmount);
+            Transaction tr = new Transaction();
+            tr.Set(newAmount);
         }
     }
 }

@@ -40,21 +40,20 @@ namespace TestForm
             };
             timeoutTimer.Elapsed += TimeoutTimer_Elapsed;
             Port.PortName = _portname;
-            Port.BaudRate = 57600;
+            Port.BaudRate = 9600;
             Port.Parity = Parity.None;
             Port.DataBits = 8;
             Port.StopBits = StopBits.One;
             Port.Handshake = Handshake.None;
             Port.RtsEnable = true;
             Port.DtrEnable = true;
-            Port.Encoding = Encoding.Unicode;
+            Port.Encoding = Encoding.Default;
             Port.DataReceived += new SerialDataReceivedEventHandler(DataReceivedHandler);
             try
             {
                 if (!(Port.IsOpen))
                 {
                     Port.Open();
-                    //Port.ReadExisting();
                 }
                 return 0;
             }
@@ -110,31 +109,35 @@ namespace TestForm
         /// 
         public void DataReceivedHandler(object sender, SerialDataReceivedEventArgs e)
         {
-            SerialPort port = (SerialPort)sender;
-            port.ReadTimeout = 6000;
-            var buffer = new byte[256];
-            byte received;
-            byte len;
-            received = (byte)port.ReadByte();
-            if (received == 0x01)
+            try
             {
-                len = (byte)port.ReadByte();
-                for (int i = 0; i < (len - 28); i++)
+                SerialPort port = (SerialPort)sender;
+                port.ReadTimeout = 6000;
+                var buffer = new byte[256];
+                byte received;
+                byte len;
+                received = (byte)port.ReadByte();
+                if (received == 0x01)
                 {
-                    buffer[i] = (byte)port.ReadByte();
-                }
-                timeoutTimer.Enabled = false;
-                OnRecievedEvent(buffer, len);
-            }
-            else
-            {
-                if (received == 0x16)
-                {
+                    len = (byte)port.ReadByte();
+                    for (int i = 0; i < (len - 29); i++)
+                    {
+                        buffer[i] = (byte)port.ReadByte();
+                    }
                     timeoutTimer.Enabled = false;
-                    timeoutTimer.Enabled = true;
+                    OnRecievedEvent(buffer, len);
                 }
-                port.ReadExisting();
+                else
+                {
+                    if (received == 0x16)
+                    {
+                        timeoutTimer.Enabled = false;
+                        timeoutTimer.Enabled = true;
+                    }
+                    port.ReadExisting();
+                }
             }
+            catch { }
         }
 
         /// <summary>

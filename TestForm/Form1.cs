@@ -22,7 +22,9 @@ namespace TestForm
 
         private void btnConnect_Click(object sender, EventArgs e)
         {
-            log.Write($"Connect result: {printer.Connect("COM8")}");
+            log.Write($"Connect result: {printer.Connect("COM11")}");
+            int err = printer.PrinterStatus();
+            SetCboxes();
         }
 
         private void btnRunPaper_Click(object sender, EventArgs e)
